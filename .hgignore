@@ -1,0 +1,4 @@
+syntax: glob
+*.pyc
+*.properties
+.DS_Store
