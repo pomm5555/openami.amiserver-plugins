@@ -62,7 +62,7 @@ class avrContainer(ThreadContainer):
         ##
         # Hardware Initialization
         ##
-        lib=Config.absPath+"/PlugInsSupport/libavrBridgeC.dylib"
+        lib="/root/libavrBridgeC.so"
         self.mega=cdll.LoadLibrary(lib)
 
         self.mega.initUsbLib()
@@ -114,13 +114,20 @@ class avrContainer(ThreadContainer):
                 address = Address("/Defaults/Stop")
                 EventEngine.root.getByAddress(address.__str__()).use()
                 time.sleep(.5)
+                
+            if self.mega.getPortPin(0,2) == 0:
+                address = Address("/Defaults/Stop")
+                EventEngine.root.getByAddress(address.__str__()).use()
+                address = Address("/FeedReader/Random")
+                EventEngine.root.getByAddress(address.__str__()).use()
+                time.sleep(.5)
 
-            if not str(int(self.lastval)).__eq__(str(int(val))):
-                print "Default Volume"+str(val)+", "+str(int(self.lastval))+", "+str(int(val))
-                address = Address("/Defaults/SetVol")
-                print EventEngine.root.getByAddress(address.__str__())
-                EventEngine.root.getByAddress(address.__str__()).use(val)
-                self.lastval = val
+            #if not str(int(self.lastval)).__eq__(str(int(val))):
+            #    print "Default Volume"+str(val)+", "+str(int(self.lastval))+", "+str(int(val))
+            #    address = Address("/Defaults/SetVol")
+            #    print EventEngine.root.getByAddress(address.__str__())
+            #    EventEngine.root.getByAddress(address.__str__()).use(val)
+            #    self.lastval = val
 
 
             time.sleep(.3)
