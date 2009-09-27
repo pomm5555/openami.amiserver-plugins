@@ -1,9 +1,7 @@
 
 from AmiTree import *
 from PlugIn import PlugIn
-from CommunicationEngine import CommunicationEngine
 from amiConfig import Config
-from ctypes import cdll, c_int
 from EventEngine import EventEngine
 from Address import Address
 import time, socket
@@ -58,10 +56,16 @@ class callmonitorContainer(ThreadContainer):
             print 'Call ended!'
             #EventEngine.root.getByAddress(address.__str__()).use('Call ended!')
 
+        self.log.append("<br/>\n"+d.__str__())
+
     def __init__(self, type, token, information="empty"):
         ThreadContainer.__init__(self, type, token, information="empty")
         self.information = "hehehehe, callmonitor"
         self.handler = self.simpleHandler
+
+        self.log = []
+        self.log.append("Call Monitor Log:")
+
 
 
     def run(self):
@@ -74,4 +78,24 @@ class callmonitorContainer(ThreadContainer):
             if not line:
                 break
             self.handler(line.strip().split(';'))
+            time.sleep(1)
         s.close()
+
+    def toHtml(self):
+        if self.visible:
+            result=""
+            for k, v in self.content.items():
+                result+=v.toHtml()
+
+            #if result.__eq__(""):
+            #    return "<li><a href=\""+self.getAddress()+"\">"+self.token+"</a>"+result+"</li>"
+            return "<ul><li><a href=\""+self.getAddress()+"\">"+self.token+"</a> L</li>"+result+"</ul>"
+            
+        else:
+            return ""
+
+    def use(self, string=""):
+        result = ""
+        for elem in self.log:
+            result += "\n"+elem
+        return result

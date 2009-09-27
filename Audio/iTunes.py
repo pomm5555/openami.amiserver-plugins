@@ -13,8 +13,7 @@ class iTunes(PlugIn):
         PlugIn.__init__(self)
         self.architecture = "macos"
         
-        self.configFile = configFile
-        self.parseConfig()
+        
 
         #plugin itself
         self.content = Container("plugin",token, "This is a iTunes Plugins")
@@ -60,33 +59,28 @@ class iTunes(PlugIn):
         return self.content
 
     def unmute(self, string=""):
-        os.system(self.iTunesScript+" unmute")
+        os.system(Config.get("iTunes", "scriptpath")+" unmute")
 
     def mute(self, string=""):
-        os.system(self.iTunesScript+" mute")
+        os.system(Config.get("iTunes", "scriptpath")+" mute")
 
     def play(self, string=""):
-        os.system(self.iTunesScript+" play")
+        os.system(Config.get("iTunes", "scriptpath")+" play")
 
     def pause(self, string=""):
-        os.system(self.iTunesScript+" pause")
+        os.system(Config.get("iTunes", "scriptpath")+" pause")
 
     def next(self, string=""):
-        os.system(self.iTunesScript+" next")
+        os.system(Config.get("iTunes", "scriptpath")+" next")
 
     def prev(self, string=""):
-        os.system(self.iTunesScript+" prev")
+        os.system(Config.get("iTunes", "scriptpath")+" prev")
 
     def vol_up(self, string=""):
-        os.system(self.iTunesScript+" vol up")
+        os.system(Config.get("iTunes", "scriptpath")+" vol up")
 
     def vol_down(self, string=""):
-        os.system(self.iTunesScript+" vol down")
+        os.system(Config.get("iTunes", "scriptpath")+" vol down")
 
     def stop(self, string=""):
-        os.system(self.iTunesScript+" stop")
-
-    def parseConfig(self):
-
-        # parsing jabber section
-        self.iTunesScript = Config.iTunesScript
+        os.system(Config.get("iTunes", "scriptpath")+" stop")
